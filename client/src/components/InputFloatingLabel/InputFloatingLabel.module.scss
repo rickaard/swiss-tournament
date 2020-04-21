@@ -1,0 +1,32 @@
+.InputGroup {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 2rem 0;
+
+    .Input {
+        border: none;
+        border-bottom: 1px solid #DD892F;
+        font-size: 1.2rem;
+        background: inherit;
+        color: inherit;
+        padding: 0.2em 0.2em;
+    }
+}
+
+
+
+
+.Label {
+    position: absolute;
+    left: 0;
+    transition: transform .5s;
+    transform: translate(0, -2px) scale(1);
+    cursor: text;
+
+    &.Focused {
+    transform: translate(0, -20px) scale(0.75);
+    transform-origin: top left;
+    }
+}
