@@ -15,14 +15,19 @@ const InputFloatingLabel = (props) => {
         setIsFocused(false);
     }
 
-    let attachedClasses = [styles.Label];
+    let attachedLabelClasses = [styles.Label];
     if (isFocused || props.inputValue.length > 0) {
-        attachedClasses = [styles.Label, styles.Focused];
+        attachedLabelClasses = [styles.Label, styles.Focused];
     }
 
+    // let attachedInputClasses = [styles.Input];
+    // if (props.fullWidth) {
+    //     attachedInputClasses = [styles.Input, styles.FullWidth]
+    // };
+
     return (
-        <div className={styles.InputGroup}>
-            <label htmlFor={props.inputName} className={attachedClasses.join(' ')}>{props.labelName}</label>
+        <div className={styles.InputWrapper}>
+            <label htmlFor={props.inputName} className={attachedLabelClasses.join(' ')}>{props.labelName}</label>
             <input
                 className={styles.Input}
                 id={props.inputName}
