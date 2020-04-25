@@ -1,44 +1,47 @@
 import React, { useState } from 'react'
-
+import PropTypes from 'prop-types';
 import styles from './InputFloatingLabel.module.scss';
 
-const InputFloatingLabel = (props) => {
+const InputFloatingLabel = ({ inputName, labelName, inputValue, handleChange, inputType }) => {
     const [isFocused, setIsFocused] = useState(false);
 
     const handleFocused = () => {
-        console.log('är fokuserad');
         setIsFocused(true);
     }
 
     const handleBlured = () => {
-        console.log('är blurrad');
         setIsFocused(false);
     }
 
     let attachedLabelClasses = [styles.Label];
-    if (isFocused || props.inputValue.length > 0) {
+    if (isFocused || inputValue.length > 0) {
         attachedLabelClasses = [styles.Label, styles.Focused];
     }
 
-    // let attachedInputClasses = [styles.Input];
-    // if (props.fullWidth) {
-    //     attachedInputClasses = [styles.Input, styles.FullWidth]
-    // };
-
     return (
         <div className={styles.InputWrapper}>
-            <label htmlFor={props.inputName} className={attachedLabelClasses.join(' ')}>{props.labelName}</label>
+            <label htmlFor={inputName} className={attachedLabelClasses.join(' ')}>{labelName}</label>
             <input
                 className={styles.Input}
-                id={props.inputName}
-                value={props.inputValue}
-                name={props.inputName}
+                id={inputName}
+                value={inputValue}
+                name={inputName}
                 onFocus={handleFocused}
                 onBlur={handleBlured}
-                onChange={props.handleChange}
+                onChange={handleChange}
+                required
+                type={inputType}
             />
         </div>
     )
+}
+
+InputFloatingLabel.propTypes = {
+    inputName: PropTypes.string,
+    labelName: PropTypes.string,
+    inputValue: PropTypes.string,
+    handleChange: PropTypes.func,
+    inputType: PropTypes.string
 }
 
 export default InputFloatingLabel

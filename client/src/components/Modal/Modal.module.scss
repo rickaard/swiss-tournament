@@ -1,0 +1,51 @@
+.Backdrop {
+    position: fixed;
+	background: rgba(0, 0, 0, 0.9) none repeat scroll 0% 0%;
+	width: 100vw;
+	height: 100vh;
+	top: 0px;
+	left: 0px;
+	z-index: 1000;
+}
+
+.Modal {
+    position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+    z-index: 1000;
+	background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+	padding: 1rem;
+	min-width: 30%;
+	min-height: 30%;
+}
+
+.ModalButtons {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	margin-top: 2rem;
+
+	button {
+		padding: 0.3rem 0.9rem;
+		background: transparent;
+		border: none;
+		font-size: 0.9rem;
+		cursor: pointer;
+		color: #555;
+	}
+
+	.CancelButton:hover {
+		color: darken($color: #555, $amount: 20%);
+	}
+
+	.SuccessButton {
+		background: #010648;
+		color: #fff;
+		border: 1px solid #010648;
+
+		&:hover {
+			background: lighten($color: #010648, $amount: 10%);
+		}
+	}
+}
