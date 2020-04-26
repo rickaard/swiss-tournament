@@ -134,7 +134,7 @@ const NewTournamentForm = () => {
                     open={openModal}
                     closeModal={setOpenModal}
                     sendRequest={buildRequestObject}
-                    hideButtons={isLoading ? true : false}
+                    hideButtons={isLoading || returnData ? true : false}
                 >
                     {!isLoading ? // if isLoading is false
                         !returnData ? ( // if returnData is null/false -> show StartSummary

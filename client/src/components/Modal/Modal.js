@@ -4,7 +4,6 @@ import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import styles from './Modal.module.scss';
 
 const Modal = ({ children, setOpen, open, closeModal, sendRequest, hideButtons }) => {
-    console.log(hideButtons);
 
     useEffect(() => {
         disableBodyScroll(document.body);

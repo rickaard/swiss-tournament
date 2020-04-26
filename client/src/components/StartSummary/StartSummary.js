@@ -28,7 +28,7 @@ const TeamSummary = ({ values, emailValue, setEmailValue }) => {
             </div>
             <div className={styles.Info}>
                 <p>When you start a new tournament you will get two links: one admin page to handle the tournament and one display page.</p>
-                <p>Please enter your email below to get these links emailed to you. If you somehow forget these links it's not possible to retrieve them again.</p>
+                <p>Please enter your email below to get these links emailed to you. I will not use your email for anything else than to send you these links. If you somehow forget these links it's not possible to retrieve them again.</p>
                 <div className={styles.Input}>
                     <InputFloatingLabel
                         inputValue={emailValue}
