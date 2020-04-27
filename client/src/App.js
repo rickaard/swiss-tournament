@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 import NewTournamentPage from './pages/NewTourrnamentPage/NewTournamentPage';
 import TournamentPage from './pages/TournamentPage/TournamentPage';
+import NoTournamentPage from './pages/NoTournamentPage/NoTournamentPage';
 
 function App() {
   return (
@@ -15,6 +16,10 @@ function App() {
 
         <Route path="/tournament/:id">
           <TournamentPage />
+        </Route>
+
+        <Route path="/tournament/">
+          <NoTournamentPage />
         </Route>
 
 

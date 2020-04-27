@@ -3,6 +3,9 @@ import { useParams, useLocation } from 'react-router-dom';
 
 import styles from './TournamentPage.module.scss';
 
+import CurrentTimeContainer from '../../components/CurrentTimeContainer/CurrentTimeContainer';
+import PoolsWrapper from '../../components/PoolsWrapper/PoolsWrapper';
+
 const useQuery = () => {
     return new URLSearchParams(useLocation().search);
 }
@@ -13,14 +16,13 @@ const Tournament = () => {
     const authId = query.get("auth");
 
 
-    console.log(authId);
-
     return (
         <div className={styles.Container}>
-            <h1>Tournament page id: {id}</h1>
-            {authId && (
-                <h2>Tournament auth id: {authId}</h2>
-            )}
+            <CurrentTimeContainer />
+            <PoolsWrapper
+                tournamentId={id}
+                authId={authId}
+            />
         </div>
     )
 }

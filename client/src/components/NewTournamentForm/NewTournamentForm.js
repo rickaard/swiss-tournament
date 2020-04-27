@@ -62,7 +62,7 @@ const NewTournamentForm = () => {
             tournamentObject.teams.push(rest[team]);
         }
 
-        console.log('Turneringsobjekt: ', tournamentObject);
+        console.log('[NewTournamentForm] - Turneringsobjekt: ', tournamentObject);
         postTournamentData(tournamentObject);
     }
 
@@ -77,7 +77,7 @@ const NewTournamentForm = () => {
         })
             .then(response => response.json())
             .then(result => {
-                console.log(result);
+                console.log('[NewTournamentForm] - result after fetch: ',result.savedTournament._id);
                 setIsLoading(false);
                 setInputValue({ ...blankTournament })
                 setReturnData(result);
@@ -146,7 +146,8 @@ const NewTournamentForm = () => {
                             // Else show the returnData
                         ) : (
                             <TournamentLinks 
-                                data={returnData}
+                                tournamentId={returnData.savedTournament._id}
+                                authId={returnData.savedTournament.authId}
                             />
                         )
                         : (

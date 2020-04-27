@@ -7,6 +7,7 @@ const tournamentSchema = new mongoose.Schema({
         min: 2,
         max: 255
     },
+    authId: String,
     createdAt: {
         type: Date,
         default: Date.now

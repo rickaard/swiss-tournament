@@ -1,0 +1,17 @@
+.CurrentTimeContainer {
+    display: flex;
+    flex-direction: column;
+
+    span {
+        display: block;
+        text-transform: uppercase;
+    }
+
+    .Text {
+        font-size: .8rem;
+    }
+
+    .Time {
+        font-size: 1.5rem;
+    }
+}
