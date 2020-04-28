@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { PoolContext, TeamsContext } from '../../utils/TournamentContext';
+import { PoolContext, TeamsContext, AuthContext } from '../../utils/TournamentContext';
 
 
 import styles from './TournamentPage.module.scss';
@@ -19,10 +19,13 @@ const Tournament = () => {
     const [isLoaded, setIsLoaded] = useState(false);
     const [teams, setTeams] = useState(null);
     const [pools, setPools] = useState(null);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const authId = query.get("auth");
 
-
+    useEffect(() => {
+        if (authId) setIsAuthenticated(true);
+    }, [authId])
 
     useEffect(() => {
         fetch('http://localhost:3001/tournament/' + id)
@@ -46,15 +49,16 @@ const Tournament = () => {
     return (
         <PoolContext.Provider value={{ pools, setPools }}>
             <TeamsContext.Provider value={{ teams, setTeams }}>
+                <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
 
-                <div className={styles.Container}>
-                    <CurrentTimeContainer />
-                    <PoolsWrapper
-                        tournamentId={id}
-                        authId={authId}
-                    />
-                </div>
-
+                    <div className={styles.Container}>
+                        <CurrentTimeContainer />
+                        <PoolsWrapper
+                            tournamentId={id}
+                            authId={authId}
+                        />
+                    </div>
+                </AuthContext.Provider>
             </TeamsContext.Provider>
         </PoolContext.Provider>
 

@@ -8,7 +8,7 @@
     background: rgba(0, 0, 54, .74);
     height: 100%;
 
-    h3 {
+    .PoolType {
         position: relative;
         top: 0;
         left: 0;
@@ -23,11 +23,6 @@
         width: 50%;
         // margin-bottom: 1rem;
         padding: 3px 0;
-
-        &:hover {
-            background: lighten($color: #dd892f, $amount: 15%);
-            cursor: pointer;
-        }
     }
 
     .GamesWrapper {
