@@ -1,5 +1,8 @@
 .PoolsWrapper {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     position: relative;
+    justify-content: space-between;
+    margin: 5rem 0;
+    width: 100%;
 }

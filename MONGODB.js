@@ -1,5 +1,6 @@
 const mongodb = {
     tournamentName: "tournament",
+    authId: 'sadkj2323A',
     teams: [
       {
         name: 'Zerowin',

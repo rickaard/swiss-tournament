@@ -63,12 +63,20 @@ app.post('/create-tournament', async (req, res) => {
         teams: teams.map(team => ({ name: team, wins: 0, losses: 0 })),
         pools: [
             {
-                round: 0,
+                round: 1,
                 wins: 0,
                 losses: 0,
                 poolType: '0-0',
                 games: gamesArray
-            }
+            },
+            { round: 2, wins: 1, losses: 0, poolType: '1-0', games: [] },
+            { round: 2, wins: 0, losses: 1, poolType: '0-1', games: [] },
+            { round: 3, wins: 2, losses: 0, poolType: '2-0', games: [] },
+            { round: 3, wins: 1, losses: 1, poolType: '1-1', games: [] },
+            { round: 3, wins: 0, losses: 2, poolType: '0-2', games: [] },
+            { round: 4, wins: 2, losses: 1, poolType: '2-1', games: [] },
+            { round: 4, wins: 1, losses: 2, poolType: '1-2', games: [] },
+            { round: 5, wins: 2, losses: 2, poolType: '2-2', games: [] },
         ]
     });
 
@@ -86,6 +94,8 @@ app.post('/create-tournament', async (req, res) => {
 
 
 app.get('/tournament/:id', (req, res) => {
+    console.log('Client requested a tournament document');
+
     Tournament.findById(req.params.id, (error, tournament) => {
         if (error) return res.status(500).send(error);
         return res.status(200).send({ tournament });

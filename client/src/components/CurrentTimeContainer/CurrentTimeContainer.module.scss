@@ -1,6 +1,9 @@
 .CurrentTimeContainer {
     display: flex;
     flex-direction: column;
+    color: #dd892f;
+    text-align: center;
+    margin-top: 1rem;
 
     span {
         display: block;
@@ -9,9 +12,11 @@
 
     .Text {
         font-size: .8rem;
+        font-weight: bold;
     }
 
     .Time {
-        font-size: 1.5rem;
+        font-size: 3.3rem;
+        font-weight: bold;
     }
 }
