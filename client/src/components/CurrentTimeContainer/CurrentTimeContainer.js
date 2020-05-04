@@ -6,7 +6,7 @@ const getTime = () => {
     return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-const CurrentTimeContainer = () => {
+const CurrentTimeContainer = (props) => {
     const [currentTime, setCurrentTime] = useState(getTime());
 
     useEffect(() => {
@@ -18,7 +18,7 @@ const CurrentTimeContainer = () => {
 
 
     return (
-        <div className={styles.CurrentTimeContainer}>
+        <div className={styles.CurrentTimeContainer} onClick={props.onClick}>
             <span className={styles.Text}>Current Time:</span>
             <span className={styles.Time}>{currentTime}</span>
         </div>

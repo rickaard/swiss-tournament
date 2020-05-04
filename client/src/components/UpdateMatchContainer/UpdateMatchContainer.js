@@ -2,27 +2,29 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './UpdateMatchContainer.module.scss';
 
-const UpdateMatchContainer = ({ currentGame }) => {
-    console.log('UpdateMatchContainer.js, inne i Modal, current game: ', currentGame);
+const UpdateMatchContainer = ({ home, changeHomeScore, away, changeAwayScore }) => {
+    // console.log('UpdateMatchContainer.js, inne i Modal, current game: ', currentGame);
     return (
         <div className={styles.UpdateContainer}>
             <form>
                 <div className={styles.InputGroup}>
-                    <label htmlFor="home">{currentGame.home}</label>
+                    <label htmlFor="home">{home.home}</label>
                     <input
                         type="number"
                         name="home"
-                        defaultValue={currentGame.homeScore}
-                        onChange={() => 'UpdateMatchContainer.js - uppdaterar home input'}
+                        min={0}
+                        value={home.homeScore}
+                        onChange={(e) => changeHomeScore({ ...home, homeScore: e.target.value })}
                     />
                 </div>
                 <div className={styles.InputGroup}>
-                    <label htmlFor="away">{currentGame.away}</label>
+                    <label htmlFor="away">{away.away}</label>
                     <input
                         type="number"
                         name="away"
-                        defaultValue={currentGame.awayScore}
-                        onChange={() => 'UpdateMatchContainer.js - uppdaterar away input'}
+                        min={0}
+                        value={away.awayScore}
+                        onChange={(e) => changeAwayScore({ ...away, awayScore: e.target.value })}
                     />
                 </div>
             </form>

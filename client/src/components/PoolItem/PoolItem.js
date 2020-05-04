@@ -1,16 +1,13 @@
 import React, { useContext } from 'react';
-// import { AuthContext } from '../../utils/TournamentContext';
-
 
 import MatchUpContainer from '../MatchUpContainer/MatchUpContainer';
 import styles from './PoolItem.module.scss';
 
-const PoolItem = ({ poolType, poolGames }) => {
-    // const { isAuthenticated } = useContext(AuthContext);
-    // console.log('PoolItem.js - isAuthenticated: ', isAuthenticated);
+const PoolItem = ({ poolType, poolGames, poolId, updateMatchInSpecifcPool }) => {
 
 
-    console.log('PoolItem.js - ', poolType, poolGames);
+
+    // console.log('PoolItem.js - ', poolType, poolGames);
     return (
         <div className={styles.PoolItem}>
             <h3 className={styles.PoolType}>{poolType}</h3>
@@ -19,6 +16,8 @@ const PoolItem = ({ poolType, poolGames }) => {
                     <MatchUpContainer
                         key={index}
                         game={game}
+                        poolId={poolId}
+                        updateMatchInSpecifcPool={updateMatchInSpecifcPool}
                     />
                 ))}
             </div>

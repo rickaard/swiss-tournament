@@ -22,23 +22,32 @@ const Tournament = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
     const authId = query.get("auth");
+    // console.log('TournamentPage.js - authId: ', authId);
+
+    // useEffect(() => {
+        
+    //     console.log('Är authenticerad: ', isAuthenticated);
+    // }, [isLoaded])
 
     useEffect(() => {
-        if (authId) setIsAuthenticated(true);
-    }, [authId])
 
-    useEffect(() => {
         fetch('http://localhost:3001/tournament/' + id)
             .then(response => response.json())
             .then(data => {
-                console.log(data.tournament);
+                console.log('TournamentPage.js, resultat efter fetch: ', data.tournament);
                 setTeams(data.tournament.teams);
                 setPools(data.tournament.pools);
+                if (authId === data.tournament.authId) {
+                    setIsAuthenticated(true);
+                }
                 setIsLoaded(true);
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                setIsLoaded(true);
+                console.log(error);
+            })
 
-    }, [id])
+    }, [id, authId])
 
     if (!isLoaded) return (
         <div className={styles.SpinnerWrapper}>
@@ -46,16 +55,28 @@ const Tournament = () => {
         </div>
     )
 
+    if (!pools) return (
+        <div className={styles.SpinnerWrapper}>
+            <h1 style={{color: '#dd892f'}}>No tournament with that ID found.</h1>
+        </div>
+    )
+
+    // console.log('TournamentPage.js - Är authenticerad: ', isAuthenticated);
+
     return (
         <PoolContext.Provider value={{ pools, setPools }}>
             <TeamsContext.Provider value={{ teams, setTeams }}>
                 <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
 
                     <div className={styles.Container}>
-                        <CurrentTimeContainer />
+                        <CurrentTimeContainer
+                            onClick={() => {
+                                console.log('TournamentPage.js, teams-state: ', teams);
+                                console.log('TournamentPage.js, pools-state: ', pools);
+                            }} />
                         <PoolsWrapper
                             tournamentId={id}
-                            authId={authId}
+                            // authId={authId}
                         />
                     </div>
                 </AuthContext.Provider>

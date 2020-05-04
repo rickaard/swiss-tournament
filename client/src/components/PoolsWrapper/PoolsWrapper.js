@@ -9,7 +9,7 @@ import PoolRoundWrapper from '../PoolRoundWrapper/PoolRoundWrapper';
 
 const PoolsWrapper = ({ tournamentId, authId }) => {
     const { pools } = useContext(PoolContext);
-    console.log('[PoolsWrapper] - PoolContext: ', pools);
+    // console.log('[PoolsWrapper] - PoolContext: ', pools);
 
     // Divide the pool round's into it own arrays
     const poolRoundOne = pools.filter(pool => pool.round === 1);

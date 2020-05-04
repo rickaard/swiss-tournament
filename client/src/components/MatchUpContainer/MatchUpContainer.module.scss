@@ -5,6 +5,7 @@
     justify-content: space-between;
     min-height: 50px;
     align-items: center;
+    padding: 0 6px;
 
     &.AdminMatchUp:hover {
         background: #dd892f42;
@@ -18,14 +19,22 @@
         font-size: 0.9rem;
     }
 
-    div {
+    .HomeTeam, .AwayTeam {
         width: max-content;
         margin: auto;
         text-align: center;
         border: 1px solid #dd892f;
         width: 130px;
-        padding: 6px;
+        padding: 6px 12px;
         font-weight: bold;
+        position: relative;
+
+        p {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+        }
     }
 
     div:first-child {
@@ -33,5 +42,37 @@
     }
     div:last-child {
         border-radius: 0 50px 0 50px;
+    }
+
+    .ArrowUp::after {
+        content: '';
+        width: 0;
+        height: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        top: 0; // eller top:0 för den som ska peka UPP
+        border-bottom: 11px solid #d87b2c;  // eller border-bottom för den som ska peka UPP
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        margin-top: -11px; // eller margin-top för den som ska peka UPP
+    }
+
+    .ArrowDown::after {
+        content: '';
+        width: 0;
+        height: 0;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        bottom: 0; // eller top:0 för den som ska peka UPP
+        border-top: 11px solid #d87b2c;  // eller border-bottom för den som ska peka UPP
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        margin-bottom: -11px; // eller margin-top för den som ska peka UPP
     }
 }
