@@ -5,7 +5,7 @@ import UpdateMatchModal from '../UptadeMatchModal/UpdateMatchModal';
 import UpdateMatchContainer from '../UpdateMatchContainer/UpdateMatchContainer';
 import styles from './MatchUpContainer.module.scss';
 
-const MatchUpContainer = ({ game, poolId, updateMatchInSpecifcPool }) => {
+const MatchUpContainer = ({ game, poolId, updateMatchInSpecifcPool, showScore }) => {
     const { isAuthenticated } = useContext(AuthContext);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -29,6 +29,17 @@ const MatchUpContainer = ({ game, poolId, updateMatchInSpecifcPool }) => {
 
     //     return () => clearInterval(interval);
     // }, [])
+
+
+    // TESTA DENNA 
+    // const nameTimeout = 10000;
+    // const scoreTimeout = 2000;
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //         setShowScore(!showScore);
+    //     }, showScore ? scoreTimeout : nameTimeout);
+    //     return () => clearTimeout(timeout);
+    // }, [showScore]);
 
 
 
@@ -68,14 +79,22 @@ const MatchUpContainer = ({ game, poolId, updateMatchInSpecifcPool }) => {
         homeTeamClassNames.push(styles.ArrowDown);
     }
 
+    const showScoreOrNot = (team, teamScore) => {
+        if (game.homeScore === 0 && game.awayScore === 0) {
+            return team;
+        }
+        return teamScore;
+
+    }
+
     return (
         <>
             <div className={attachedClassNames.join(' ')} onClick={handleAdminClick} >
-                {/* <div className={homeTeamClassNames.join(' ')}><p>{!showScore ? game.home : game.homeScore}</p></div> */}
-                <div className={homeTeamClassNames.join(' ')}><p>{game.home}</p></div>
+                <div className={homeTeamClassNames.join(' ')}><p>{!showScore ? game.home : showScoreOrNot(game.home,game.homeScore)}</p></div>
+                {/* <div className={homeTeamClassNames.join(' ')}><p>{game.home}</p></div> */}
                 <span className={styles.VersusText}>VS</span>
-                {/* <div className={awayTeamClassNames.join(' ')}><p>{!showScore ? game.away : game.awayScore}</p></div> */}
-                <div className={awayTeamClassNames.join(' ')}><p>{game.away}</p></div>
+                <div className={awayTeamClassNames.join(' ')}><p>{!showScore ? game.away : showScoreOrNot(game.away, game.awayScore)}</p></div>
+                {/* <div className={awayTeamClassNames.join(' ')}><p>{game.away}</p></div> */}
             </div>
             {isModalOpen && (
                 <UpdateMatchModal

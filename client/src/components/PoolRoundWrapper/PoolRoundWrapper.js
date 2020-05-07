@@ -1,14 +1,15 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 
 import PoolItem from '../PoolItem/PoolItem';
 import styles from './PoolRoundWrapper.module.scss';
 import { PoolContext, TeamsContext } from '../../utils/TournamentContext';
+import { SocketContext } from '../../utils/SocketContext';
 
 
-const PoolRoundWrapper = ({ poolRound }) => {
+const PoolRoundWrapper = ({ poolRound, tournamentId, showScore }) => {
     const { pools, setPools } = useContext(PoolContext);
     const { teams, setTeams } = useContext(TeamsContext);
-
+    const { socket } = useContext(SocketContext);
 
     const updateMatchInSpecifcPool = (poolId, matchObject) => {
 
@@ -29,72 +30,91 @@ const PoolRoundWrapper = ({ poolRound }) => {
                 })
             }
         });
-        // Update pool context with new array
-        setPools(updatedResult);
 
-        // Find out what team won the match
+        // Find out which team won the match
         const winningTeam = matchObject.homeScore > matchObject.awayScore ? matchObject.home : matchObject.away;
-        // Find out what team lost the match
+        // Find out which team lost the match
         const loosingTeam = matchObject.homeScore < matchObject.awayScore ? matchObject.home : matchObject.away;
 
-        // Construct new teams array and update winning teams stats
-        const updatedWithWinningTeam = teams.map(team => {
-            if (team.name !== winningTeam) return team;
-            return {
-                ...team,
-                wins: team.wins + 1
-            }
+        // Construct new teams array
+        // Increment winning teams wins
+        // Increment loosing teams losses
+        const updatedTeams = teams.map(team => {
+            if (team.name === winningTeam) {
+                return {
+                    ...team,
+                    wins: team.wins + 1
+                }
+            };
+
+            if (team.name === loosingTeam) {
+                return {
+                    ...team,
+                    losses: team.losses + 1
+                }
+            };
+
+            return team;
         });
 
-        const updatedWithLoosingTeam = updatedWithWinningTeam.map(team => {
-            if (team.name !== loosingTeam) return team;
-            return {
-                ...team,
-                losses: team.losses + 1
-            }
-        });
-        // Update the teams teams context with updated team results
-        setTeams(updatedWithLoosingTeam);
+        const tournamentObject = {
+            teams: updatedTeams,
+            pools: updatedResult,
+            matchResult: matchObject,
+            tournamentId: tournamentId
+        }
 
+        postUpdatedResult(tournamentObject)
     }
+
+    const postUpdatedResult = (tournamentObj) => {
+        socket.emit('update-match', { tournamentObj }, (error) => {
+            // console.log('Uppdaterat via socket');
+            if (error) return console.log('Something went wrong'); // CHANGE THIS!!!!!!!!!!!!!!!!!
+            setPools(tournamentObj.pools);
+            setTeams(tournamentObj.teams);
+            console.log('PoolRoundWrapper.js - postUpdatedResult: inte error');
+        });
+        // try {
+        //     const response = await fetch('http://localhost:3001/tournament/' + tournamentId, {
+        //         method: 'PUT',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //         body: JSON.stringify(tournamentObj)
+        //     });
+        //     const result = await response.json();
+
+        //     // If DB update succeeded, update state context
+        //     if (result.status === 'OK') {
+        //         setPools(tournamentObj.pools);
+        //         setTeams(tournamentObj.teams)
+        //     }
+
+        //     console.log('PoolRoundWrapper.js, result after POST: ', result);
+        //     console.log('PoolRoundWrapper.js - matchResult', result.matchResult);
+        // } catch (error) {
+        //     console.log(error);
+        // }
+    };
 
 
     return (
-        <div className={styles.PoolRoundWrapper}>
-            {poolRound.map((poolRound, index) => (
-                <PoolItem
-                    key={index}
-                    poolType={poolRound.poolType}
-                    poolGames={poolRound.games}
-                    poolId={poolRound._id}
-                    updateMatchInSpecifcPool={updateMatchInSpecifcPool}
-                />
-            ))}
-        </div>
+        <>
+            <div className={styles.PoolRoundWrapper}>
+                {poolRound.map((poolRound, index) => (
+                    <PoolItem
+                        key={index}
+                        poolType={poolRound.poolType}
+                        poolGames={poolRound.games}
+                        poolId={poolRound._id}
+                        updateMatchInSpecifcPool={updateMatchInSpecifcPool}
+                        showScore={showScore}
+                    />
+                ))}
+            </div>
+        </>
     )
 }
 
 export default PoolRoundWrapper
-
-// [
-//     {
-//         _id: '324jkD',
-//         round: 1,
-//         wins: 0,
-//         losses: 0,
-//         games: [
-//             {
-//                 // DENNA MOTHERFUCKERN SKA UPPDATERAS
-//                 _id: '3289jdkdjfdsl',
-//                 away: 'bajskorv',
-//                 home: 'kiss',
-//                 awayScore: 0,
-//                 homeScore: 0
-//             },
-//             {},
-//             {}
-//         ]
-//     },
-//     {},
-//     {}
-// ]

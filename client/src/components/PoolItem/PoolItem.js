@@ -1,9 +1,9 @@
-import React, { useContext } from 'react';
+import React from 'react';
 
 import MatchUpContainer from '../MatchUpContainer/MatchUpContainer';
 import styles from './PoolItem.module.scss';
 
-const PoolItem = ({ poolType, poolGames, poolId, updateMatchInSpecifcPool }) => {
+const PoolItem = ({ poolType, poolGames, poolId, updateMatchInSpecifcPool, showScore }) => {
 
 
 
@@ -18,6 +18,7 @@ const PoolItem = ({ poolType, poolGames, poolId, updateMatchInSpecifcPool }) => 
                         game={game}
                         poolId={poolId}
                         updateMatchInSpecifcPool={updateMatchInSpecifcPool}
+                        showScore={showScore}
                     />
                 ))}
             </div>

@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import PropTypes from 'prop-types';
 import { PoolContext } from '../../utils/TournamentContext';
 
@@ -7,9 +7,21 @@ import styles from './PoolsWrapper.module.scss';
 
 import PoolRoundWrapper from '../PoolRoundWrapper/PoolRoundWrapper';
 
-const PoolsWrapper = ({ tournamentId, authId }) => {
+const nameTimeout = 10000;
+const scoreTimeout = 3000;
+
+const PoolsWrapper = ({ tournamentId }) => {
     const { pools } = useContext(PoolContext);
-    // console.log('[PoolsWrapper] - PoolContext: ', pools);
+    const [showScore, setShowScore] = useState(false);
+
+    useEffect(() => {
+
+        const timeout = setTimeout(() => {
+            setShowScore(!showScore);
+        }, showScore ? scoreTimeout : nameTimeout);
+
+        return () => clearTimeout(timeout);
+    }, [showScore]);
 
     // Divide the pool round's into it own arrays
     const poolRoundOne = pools.filter(pool => pool.round === 1);
@@ -18,27 +30,15 @@ const PoolsWrapper = ({ tournamentId, authId }) => {
     const poolRoundFour = pools.filter(pool => pool.round === 4);
     const poolRoundFive = pools.filter(pool => pool.round === 5);
 
-    // console.log('[PoolsWrapper.js] - TurneringsId: ', tournamentId);
-    // console.log('[PoolsWrapper.js] - authId: ', authId);
-
-    // useEffect(() => {
-    //     fetch('http://localhost:3001/tournament/' + tournamentId)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         console.log(data.tournament);
-    //     })
-    //     .catch(error => console.log(error))
-
-    // }, [])
 
     return (
         <div className={styles.PoolsWrapper}>
-            <PoolRoundWrapper poolRound={poolRoundOne} />
-            <PoolRoundWrapper poolRound={poolRoundTwo} />
-            <PoolRoundWrapper poolRound={poolRoundThree} />
-            <PoolRoundWrapper poolRound={poolRoundFour} />
-            <PoolRoundWrapper poolRound={poolRoundFive} />
-        </div> 
+            <PoolRoundWrapper poolRound={poolRoundOne} tournamentId={tournamentId} showScore={showScore}/>
+            <PoolRoundWrapper poolRound={poolRoundTwo} tournamentId={tournamentId} showScore={showScore} />
+            <PoolRoundWrapper poolRound={poolRoundThree} tournamentId={tournamentId} showScore={showScore} />
+            <PoolRoundWrapper poolRound={poolRoundFour} tournamentId={tournamentId} showScore={showScore} />
+            <PoolRoundWrapper poolRound={poolRoundFive} tournamentId={tournamentId} showScore={showScore} />
+        </div>
     )
 }
 

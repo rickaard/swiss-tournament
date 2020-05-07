@@ -1,0 +1,61 @@
+.Backdrop {
+    position: fixed;
+	background: rgba(0, 0, 0, 0.86) none repeat scroll 0% 0%;
+	width: 100vw;
+	height: 100vh;
+	top: 0px;
+	left: 0px;
+    z-index: 100;
+}
+
+.Modal {
+    box-shadow: 0px 0px 43px 0px #DD892F;
+    background: #000036;
+    border: 1px solid #DD892F;
+    position: fixed;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+    z-index: 1000;
+	padding: .1rem 2rem;
+    transition: all 0.3s ease-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    animation-name: box-shadow;
+    animation-duration: 1s;
+}
+@keyframes box-shadow {
+    from {box-shadow: 0px 0px 0px 0px #DD892F};
+    to {box-shadow: 0px 0px 43px 0px #DD892F};
+}
+
+.ResultWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+
+    p {
+        font-size: 1.6rem;
+    }
+
+    .ScoreWrapper {
+        margin: 0 2rem;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+
+        .ScoreItem {
+            font-size: 5rem;
+            margin: 0 .5rem;
+        }
+
+        .Divider {
+            font-size: 1.6rem;
+        }
+    }
+
+
+}

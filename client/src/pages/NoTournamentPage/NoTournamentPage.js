@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 const NoTurnamentPage = () => {
+
     return (
         <div>
             <h2>No tournament</h2>
