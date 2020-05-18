@@ -13,49 +13,26 @@ const MatchUpContainer = ({ game, poolId, updateMatchInSpecifcPool, showScore })
     const [matchId] = useState(game._id);
     const [homeTeam, setHomeTeam] = useState({ home: game.home, homeScore: game.homeScore }); // set state from props
     const [awayTeam, setAwayTeam] = useState({ away: game.away, awayScore: game.awayScore }); // set state from props
-    // const [showScore, setShowScore] = useState(false);
-
-
-
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-
-    //         setShowScore(true);
-    //         setTimeout(() => {
-    //             setShowScore(false);
-    //         }, 2000)
-
-    //     }, 10000);
-
-    //     return () => clearInterval(interval);
-    // }, [])
-
-
-    // TESTA DENNA 
-    // const nameTimeout = 10000;
-    // const scoreTimeout = 2000;
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //         setShowScore(!showScore);
-    //     }, showScore ? scoreTimeout : nameTimeout);
-    //     return () => clearTimeout(timeout);
-    // }, [showScore]);
-
-
+ 
 
     const handleAdminClick = !isAuthenticated ? null : () => setIsModalOpen(true);
 
     const updateMatch = () => {
-        setIsModalOpen(false);
-
-        const poolResult = {
-            matchId,
-            home: homeTeam.home,
-            homeScore: homeTeam.homeScore,
-            away: awayTeam.away,
-            awayScore: awayTeam.awayScore
+        if (Number(homeTeam.homeScore) === 0 && Number(awayTeam.awayScore) === 0) {
+            return console.log('Both are zero')
         }
-        updateMatchInSpecifcPool(poolId, poolResult);
+        console.log('HomeTeam is: ', homeTeam.homeScore);
+        console.log('AwayTeam is: ', awayTeam.awayScore);
+        // setIsModalOpen(false);
+
+        // const poolResult = {
+        //     matchId,
+        //     home: homeTeam.home,
+        //     homeScore: homeTeam.homeScore,
+        //     away: awayTeam.away,
+        //     awayScore: awayTeam.awayScore
+        // }
+        // updateMatchInSpecifcPool(poolId, poolResult);
     }
 
     let attachedClassNames = [styles.MatchUp];
@@ -91,22 +68,22 @@ const MatchUpContainer = ({ game, poolId, updateMatchInSpecifcPool, showScore })
         <>
             <div className={attachedClassNames.join(' ')} onClick={handleAdminClick} >
                 <div className={homeTeamClassNames.join(' ')}><p>{!showScore ? game.home : showScoreOrNot(game.home,game.homeScore)}</p></div>
-                {/* <div className={homeTeamClassNames.join(' ')}><p>{game.home}</p></div> */}
                 <span className={styles.VersusText}>VS</span>
                 <div className={awayTeamClassNames.join(' ')}><p>{!showScore ? game.away : showScoreOrNot(game.away, game.awayScore)}</p></div>
-                {/* <div className={awayTeamClassNames.join(' ')}><p>{game.away}</p></div> */}
             </div>
             {isModalOpen && (
                 <UpdateMatchModal
                     isOpen={isModalOpen}
                     setIsOpen={setIsModalOpen}
                     updateMatch={updateMatch}
+                    allowUpdate={game.homeScore === 0 && game.awayScore === 0 ? true : false}
                 >
                     <UpdateMatchContainer
                         home={homeTeam}
                         away={awayTeam}
                         changeHomeScore={setHomeTeam}
                         changeAwayScore={setAwayTeam}
+                        allowUpdate={game.homeScore === 0 && game.awayScore === 0 ? true : false}
                     />
                 </UpdateMatchModal>
             )}

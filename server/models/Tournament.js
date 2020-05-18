@@ -34,7 +34,8 @@ const tournamentSchema = new mongoose.Schema({
                 }
             ]
         }
-    ]
+    ],
+    currentRound: Number
 });
 
 module.exports = mongoose.model('Tournament', tournamentSchema);

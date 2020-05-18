@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCog } from '@fortawesome/free-solid-svg-icons'
+
 import { PoolContext, TeamsContext, AuthContext } from '../../utils/TournamentContext';
 import { SocketContext } from '../../utils/SocketContext';
 import io from 'socket.io-client';
 
+import useAllowedToGenerateNextRound from '../../utils/useAllowedToGenerateNextRound';
 
 import styles from './TournamentPage.module.scss';
 
@@ -11,6 +15,7 @@ import Spinner from '../../components/Spinner/Spinner';
 import CurrentTimeContainer from '../../components/CurrentTimeContainer/CurrentTimeContainer';
 import PoolsWrapper from '../../components/PoolsWrapper/PoolsWrapper';
 import DisplayResultModal from '../../components/DisplayResultModal/DisplayResultModal';
+import SettingsPopup from '../../components/SettingsPopup/SettingsPopup';
 
 
 const useQuery = () => {
@@ -31,30 +36,17 @@ const Tournament = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [showResultModal, setShowResultModal] = useState(false);
     const [matchResultData, setMatchResultData] = useState(null);
+    const [currentRound, setCurrentRound] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [isCurrentRoundFinished, setIsCurrentRoundFinished] = useState(false);
+    const isCurrentRoundFinished = useAllowedToGenerateNextRound(isAuthenticated, pools, currentRound); // custom hook
+    
+    const [isPlayoff, setIsPlayoff] = useState(false);
 
     const authId = query.get("auth");
 
-    // useEffect(() => {
 
-    //     fetch('http://localhost:3001/tournament/' + id)
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log('TournamentPage.js, resultat efter fetch: ', data.tournament);
-    //             setTeams(data.tournament.teams);
-    //             setPools(data.tournament.pools);
-    //             if (authId === data.tournament.authId) {
-    //                 setIsAuthenticated(true);
-    //             }
-    //             setIsLoaded(true);
-    //         })
-    //         .catch(error => {
-    //             setIsLoaded(true);
-    //             console.log(error);
-    //         })
-
-    // }, [id, authId])
     useEffect(() => {
-        console.log('TournamentPage.js - useEffect')
 
         socket.emit('join', { tournamentId: id }, (error) => {
             if (error) {
@@ -70,6 +62,7 @@ const Tournament = () => {
             // console.log(data);
             setTeams(data.teams);
             setPools(data.pools);
+            setCurrentRound(data.currentRound);
             if (authId === data.authId) {
                 setIsAuthenticated(true);
             }
@@ -82,11 +75,43 @@ const Tournament = () => {
         socket.on('match-updated', (data) => {
             console.log('TournamentPage.js - match-updated: ', data);
 
-            setTeams(data.tournament.teams); // FUNKAR INTE 
-            setPools(data.tournament.pools); // FUNKAR INTE 
-            setMatchResultData(data.matchResult); // FUNKAR
+            setTeams(data.tournament.teams);
+            setPools(data.tournament.pools);
+            setMatchResultData(data.matchResult);
+        });
+
+        socket.on('next-round-generated', data => {
+            console.log(data);
+            setPools(data.pools);
+            setCurrentRound(data.currentRound);
+        });
+
+
+        socket.on('playoffs-init', data => {
+            // console.log('SLUTSPELET PÅBÖRJAT!');
+            setPools(data.pools);
+            setCurrentRound(data.currentRound);
+            setIsPlayoff(true);
+            // setShowPlayoffs(true);
+        });
+
+        socket.on('playoffs-updated', data => {
+            setPools(data.pools);
+            setCurrentRound(data.currentRound);
+            setCurrentRound(data.currentRound);
         })
-    }, [])
+
+        return () => {
+            socket.emit('disconnect');
+            socket.off();
+        }
+    }, []);
+
+    useEffect(() => {
+        if (currentRound >= 6) {
+            setIsPlayoff(true);
+        }
+    }, [currentRound])
 
     useEffect(() => {
         if (matchResultData) {
@@ -95,7 +120,17 @@ const Tournament = () => {
                 setShowResultModal(false);
             }, 4000)
         }
-    }, [matchResultData])
+    }, [matchResultData]);
+
+    const generateNextRound = () => {
+        if (isCurrentRoundFinished) {
+            socket.emit('generate-next-round', { currentRound: currentRound, tournamentId: id }, (error) => {
+                if (error) console.log('Something went wrong!');
+            });
+        }
+    }
+
+
 
     if (!isLoaded) return (
         <div className={styles.SpinnerWrapper}>
@@ -126,13 +161,30 @@ const Tournament = () => {
                             onClick={() => {
                                 console.log('TournamentPage.js, teams-state: ', teams);
                                 console.log('TournamentPage.js, pools-state: ', pools);
+                                console.log('TournamentPage.js, currentRound: ', currentRound);
                             }} />
 
                         <SocketContext.Provider value={{ socket }}>
                             <PoolsWrapper
                                 tournamentId={id}
-                            // authId={authId}
+                                isPlayoff={isPlayoff}
                             />
+                            {isAuthenticated && (
+                                <>
+                                    <div className={styles.SettingsContainer}>
+                                        <FontAwesomeIcon icon={faCog} onClick={() => setIsModalOpen(true)} className={styles.Icon} />
+                                        {isModalOpen && (
+                                            <SettingsPopup isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
+                                                {isCurrentRoundFinished ? (
+                                                    <button className={styles.PopUp} onClick={generateNextRound}>Generate next round</button>
+                                                ) : <p>Du får inte uppdatera</p>}
+                                            </SettingsPopup>
+                                        )}
+                                    </div>
+
+                                </>
+                            )}
+
                         </SocketContext.Provider>
 
                     </div>

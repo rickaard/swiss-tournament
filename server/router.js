@@ -44,7 +44,11 @@ router.post('/create-tournament', async (req, res) => {
             { round: 4, wins: 2, losses: 1, poolType: '2-1', games: [] },
             { round: 4, wins: 1, losses: 2, poolType: '1-2', games: [] },
             { round: 5, wins: 2, losses: 2, poolType: '2-2', games: [] },
-        ]
+            { round: 6, wins: 3, poolType: 'Quarter Final', games: [] },
+            { round: 7, wins: 4, poolType: 'Semi Final', games: [] },
+            { round: 8, wins: 5, poolType: 'Grand Final', games: [] }
+        ],
+        currentRound: 1
     });
     // Save to DB
     try {

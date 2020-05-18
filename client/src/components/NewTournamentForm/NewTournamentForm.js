@@ -45,7 +45,6 @@ const NewTournamentForm = () => {
     }
 
     const buildRequestObject = () => {
-        // console.log(inputValue);
         setIsLoading(true);
 
         const { tournamentName, ...rest } = inputValue;
@@ -62,7 +61,7 @@ const NewTournamentForm = () => {
             tournamentObject.teams.push(rest[team]);
         }
 
-        console.log('[NewTournamentForm] - Turneringsobjekt: ', tournamentObject);
+        // console.log('[NewTournamentForm] - Turneringsobjekt: ', tournamentObject);
         postTournamentData(tournamentObject);
     }
 
@@ -77,7 +76,7 @@ const NewTournamentForm = () => {
         })
             .then(response => response.json())
             .then(result => {
-                console.log('[NewTournamentForm] - result after fetch: ',result.savedTournament._id);
+                // console.log('[NewTournamentForm] - result after fetch: ',result.savedTournament._id);
                 setIsLoading(false);
                 setInputValue({ ...blankTournament })
                 setReturnData(result);

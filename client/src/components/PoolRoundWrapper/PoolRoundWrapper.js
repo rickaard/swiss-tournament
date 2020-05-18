@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 
 import PoolItem from '../PoolItem/PoolItem';
 import styles from './PoolRoundWrapper.module.scss';
@@ -69,33 +69,12 @@ const PoolRoundWrapper = ({ poolRound, tournamentId, showScore }) => {
 
     const postUpdatedResult = (tournamentObj) => {
         socket.emit('update-match', { tournamentObj }, (error) => {
-            // console.log('Uppdaterat via socket');
+
             if (error) return console.log('Something went wrong'); // CHANGE THIS!!!!!!!!!!!!!!!!!
             setPools(tournamentObj.pools);
             setTeams(tournamentObj.teams);
             console.log('PoolRoundWrapper.js - postUpdatedResult: inte error');
         });
-        // try {
-        //     const response = await fetch('http://localhost:3001/tournament/' + tournamentId, {
-        //         method: 'PUT',
-        //         headers: {
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify(tournamentObj)
-        //     });
-        //     const result = await response.json();
-
-        //     // If DB update succeeded, update state context
-        //     if (result.status === 'OK') {
-        //         setPools(tournamentObj.pools);
-        //         setTeams(tournamentObj.teams)
-        //     }
-
-        //     console.log('PoolRoundWrapper.js, result after POST: ', result);
-        //     console.log('PoolRoundWrapper.js - matchResult', result.matchResult);
-        // } catch (error) {
-        //     console.log(error);
-        // }
     };
 
 

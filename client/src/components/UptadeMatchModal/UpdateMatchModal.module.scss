@@ -14,7 +14,7 @@
 	top: 50%;
 	transform: translate(-50%, -50%);
     z-index: 1000;
-	background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+	// background: rgb(255, 255, 255) none repeat scroll 0% 0%;
 	padding: 1rem;
 	min-width: 30%;
     min-height: 30%;
@@ -22,7 +22,15 @@
 
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+	justify-content: space-between;
+	
+	// background: #dd892f;
+	// color: #010137;
+	font-weight: bold;
+	background: #010137;
+	color: #dd892f;
+	box-shadow: 0px 0px 15px #dd892f;
+	border-radius: 10px;
 }
 
 
@@ -38,20 +46,23 @@
 		border: none;
 		font-size: 0.9rem;
 		cursor: pointer;
-		color: #555;
+		// color: #555;
+		color: #dd892f;
 	}
 
 	.CancelButton:hover {
-		color: darken($color: #555, $amount: 20%);
+		color: #e37908;
 	}
 
 	.SuccessButton {
 		background: #010648;
-		color: #fff;
-		border: 1px solid #010648;
+		color: #dd892f;
+		border: 1px solid #dd892f;
+		font-weight: bold;
 
 		&:hover {
-			background: lighten($color: #010648, $amount: 10%);
+			background: #dd892f;
+			color: #010648;
 		}
 	}
 }

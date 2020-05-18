@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { disableBodyScroll, clearAllBodyScrollLocks } from 'body-scroll-lock';
 import styles from './UpdateMatchModal.module.scss';
 
-const UpdateMatchModal = ({ isOpen, setIsOpen, updateMatch, children }) => {
+const UpdateMatchModal = ({ isOpen, setIsOpen, updateMatch, children, allowUpdate }) => {
 
     useEffect(() => {
         disableBodyScroll(document.body);
@@ -12,6 +12,7 @@ const UpdateMatchModal = ({ isOpen, setIsOpen, updateMatch, children }) => {
         }
     }, [isOpen])
 
+
     return (
         <>
             <div className={styles.Backdrop} onClick={() => setIsOpen(false)}></div>
@@ -19,7 +20,7 @@ const UpdateMatchModal = ({ isOpen, setIsOpen, updateMatch, children }) => {
                 {children}
                 <div className={styles.ModalButtons}>
                     <button className={styles.CancelButton} onClick={() => setIsOpen(false)}>Cancel</button>
-                    <button className={styles.SuccessButton} onClick={updateMatch}>Update</button>
+                    {allowUpdate ? <button className={styles.SuccessButton} onClick={updateMatch}>Update</button> : null}
                 </div>
             </div>
         </>
@@ -30,7 +31,8 @@ UpdateMatchModal.propTypes = {
     isOpen: PropTypes.bool,
     setIsOpen: PropTypes.func,
     updateMatch: PropTypes.func,
-    children: PropTypes.node
+    children: PropTypes.node,
+    allowUpdate: PropTypes.bool
 }
 
 export default UpdateMatchModal

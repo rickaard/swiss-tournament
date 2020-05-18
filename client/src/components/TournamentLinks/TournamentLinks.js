@@ -5,8 +5,6 @@ import styles from './TournamentLinks.module.scss';
 
 const TournamentLinks = ({ tournamentId, authId }) => {
 
-    console.log('[TournamentLinks] - props: ', tournamentId);
-
     return (
         <div className={styles.LinkWrapper}>
             <h3>This is the link's to your newly created tournament</h3>
