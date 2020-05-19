@@ -15,13 +15,12 @@ router.post('/create-tournament', async (req, res) => {
     // FIXA MEJL-UTSKICK
 
     const { tournamentName, teams, email } = req.body;
-    // console.log(email)
-    // console.log(teams);
+
 
     // shuffle teams array and divide into first pool
     const gamesArray = poolDivider(teams);
     const generatedId = shortId.generate();
-    console.log('genererad auth id: ', generatedId);
+
 
     // Create a new tournament object
     const tournament = new Tournament({
@@ -59,26 +58,5 @@ router.post('/create-tournament', async (req, res) => {
         res.status(400).send(error);
     }
 });
-
-// router.put('/tournament/:id', (req, res) => {
-//     // console.log('tournamentId: ', req.params.id);
-//     const { id } = req.params;
-//     const { teams, pools, matchResult } = req.body;
-
-//     Tournament.findByIdAndUpdate(id, { teams: teams, pools: pools }, (error, tournament) => {
-//         if (error) return res.status(500).send(error);
-//         console.log('DB uppdaterad!');
-//         return res.status(202).send({ message: 'Tournament updated', status: 'OK', matchResult })
-//     })
-// })
-
-// app.get('/tournament/:id', (req, res) => {
-//     console.log('Client requested a tournament document');
-
-//     Tournament.findById(req.params.id, (error, tournament) => {
-//         if (error) return res.status(500).send(error);
-//         return res.status(200).send({ tournament });
-//     })
-// })
 
 module.exports = router;

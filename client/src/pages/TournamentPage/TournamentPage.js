@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCog } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+// import { faCog } from '@fortawesome/free-solid-svg-icons'
 
 import { PoolContext, TeamsContext, AuthContext } from '../../utils/TournamentContext';
 import { SocketContext } from '../../utils/SocketContext';
@@ -15,7 +15,7 @@ import Spinner from '../../components/Spinner/Spinner';
 import CurrentTimeContainer from '../../components/CurrentTimeContainer/CurrentTimeContainer';
 import PoolsWrapper from '../../components/PoolsWrapper/PoolsWrapper';
 import DisplayResultModal from '../../components/DisplayResultModal/DisplayResultModal';
-import SettingsPopup from '../../components/SettingsPopup/SettingsPopup';
+// import SettingsPopup from '../../components/SettingsPopup/SettingsPopup';
 
 
 const useQuery = () => {
@@ -37,10 +37,10 @@ const Tournament = () => {
     const [showResultModal, setShowResultModal] = useState(false);
     const [matchResultData, setMatchResultData] = useState(null);
     const [currentRound, setCurrentRound] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    // const [isModalOpen, setIsModalOpen] = useState(false);
     // const [isCurrentRoundFinished, setIsCurrentRoundFinished] = useState(false);
     const isCurrentRoundFinished = useAllowedToGenerateNextRound(isAuthenticated, pools, currentRound); // custom hook
-    
+
     const [isPlayoff, setIsPlayoff] = useState(false);
 
     const authId = query.get("auth");
@@ -169,7 +169,7 @@ const Tournament = () => {
                                 tournamentId={id}
                                 isPlayoff={isPlayoff}
                             />
-                            {isAuthenticated && (
+                            {/* {isAuthenticated && (
                                 <>
                                     <div className={styles.SettingsContainer}>
                                         <FontAwesomeIcon icon={faCog} onClick={() => setIsModalOpen(true)} className={styles.Icon} />
@@ -183,6 +183,13 @@ const Tournament = () => {
                                     </div>
 
                                 </>
+                            )} */}
+                            {isAuthenticated && (
+                                <div className={styles.SettingsContainer}>
+                                    {isCurrentRoundFinished && (
+                                        <button className={styles.PopUp} onClick={generateNextRound}>Generate next round</button>
+                                    )}
+                                </div>
                             )}
 
                         </SocketContext.Provider>

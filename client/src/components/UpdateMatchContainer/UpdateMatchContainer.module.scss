@@ -36,5 +36,11 @@
                 color: #555;
             }
         }
+
+        .ErrorMsg {
+            align-self: flex-end;
+            margin-right: 1rem;
+            color: red;
+        }
     }
 }

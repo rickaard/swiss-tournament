@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const socketIO = require('socket.io');
 const cors = require('cors');
 const http = require('http');
-const shortId = require('shortid');
+// const shortId = require('shortid');
 
 const router = require('./router');
 
@@ -66,7 +66,7 @@ io.on('connect', (socket) => {
     })
 
     socket.on('generate-next-round', async ({ currentRound, tournamentId }, callback) => {
-        // currentRound berättar vilken runda som HAR spelats, t.ex. round = 1
+
         const fetchTournamentFromDB = async () => {
             return Tournament.findById(tournamentId).lean().exec();
         };
@@ -76,7 +76,6 @@ io.on('connect', (socket) => {
 
         switch (currentRound) {
             case (1): {
-                console.log('currentRound is 1: ', currentRound);
                 // GENERATE THE SECOND ROUND
 
                 // FILTER OUT THE TEAMS THAT WILL GO TO EACH POOL: [1-0], [0-1]
@@ -111,7 +110,6 @@ io.on('connect', (socket) => {
 
             case (2): {
                 // GENERATE THE THIRD ROUND
-                console.log('currentRound is 2: ', currentRound);
 
                 // FILTER OUT THE TEAMS THAT WILL GO TO EACH POOL: [2-0], [1-1], [0-2]
                 // ONLY RETURN THE TEAM NAME
@@ -148,7 +146,6 @@ io.on('connect', (socket) => {
 
             case (3): {
                 // GENERATE THE FORTH ROUND
-                console.log('currentRound is 3: ', currentRound);
 
                 const twoOneTeams = tournament.teams.filter(team => team.wins === 2 && team.losses === 1).map(team => team.name);
                 const oneTwoTeams = tournament.teams.filter(team => team.wins === 1 && team.losses === 2).map(team => team.name);
@@ -175,7 +172,6 @@ io.on('connect', (socket) => {
             }
             case (4): {
                 // GENERATE THE FIFTH / LAST ROUND IN SWISS FORMAT
-                console.log('currentRound is 4: ', currentRound);
 
                 const twoTwoTeams = tournament.teams.filter(team => team.wins === 2 && team.losses === 2).map(team => team.name);
 
@@ -197,7 +193,6 @@ io.on('connect', (socket) => {
             }
             case (5): {
                 // GENERATE THE QUARTER FINAL
-                console.log('currentRound is 5: ', currentRound);
 
                 // GET ALL THE TEAMS THAT HAVE 3 WINS, I.E. HAVE ADVANCED TO THE PLAYOFF
                 const quarterFinalTeams = tournament.teams.filter(team => team.wins === 3).map(team => team.name);
@@ -220,7 +215,6 @@ io.on('connect', (socket) => {
             }
             case (6): {
                 // GENERATE THE SEMI FINAL
-                console.log('currentRound is Quarter Final / 6: ', currentRound);
 
                 // GET ALL THE TEAMS THAT HAVE 4 WINS
                 const semiFinalTeams = tournament.teams.filter(team => team.wins === 4).map(team => team.name);
@@ -243,7 +237,6 @@ io.on('connect', (socket) => {
             }
             case (7): {
                 // GENERATE THE GRAND FINAL
-                console.log('currentRound is Semi Final / 7: ', currentRound);
 
                 // GET ALL THE TEAMS THAT HAVE 5 WINS, I.E. IS ADVANCED TO THE GRAND FINAL
                 const grandFinalTeams = tournament.teams.filter(team => team.wins === 5).map(team => team.name);

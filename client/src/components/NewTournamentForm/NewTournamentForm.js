@@ -28,20 +28,53 @@ const blankTournament = {
     teamSixteen: 'Lag sexton',
 }
 
+// const blankTournament = {
+//     tournamentName: '',
+//     teamOne: '',
+//     teamTwo: '',
+//     teamThree: '',
+//     teamFour: '',
+//     teamFive: '',
+//     teamSix: '',
+//     teamSeven: '',
+//     teamEight: '',
+//     teamNine: '',
+//     teamTen: '',
+//     teamEleven: '',
+//     teamTwelve: '',
+//     teamThirteen: '',
+//     teamFourteen: '',
+//     teamFiftheen: '',
+//     teamSixteen: '',
+// }
+
 const NewTournamentForm = () => {
     const [inputValue, setInputValue] = useState({ ...blankTournament });
     const [openModal, setOpenModal] = useState(false);
     const [emailValue, setEmailValue] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [returnData, setReturnData] = useState(null);
+    const [errorMsg, setErrorMsg] = useState(null);
 
     const handleChange = (e) => {
+        setErrorMsg(false);
         setInputValue({ ...inputValue, [e.target.name]: e.target.value })
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
+
+        if (checkIfContainsEmptyStrings(inputValue)) {
+            return setErrorMsg(true);
+        }
+
         setOpenModal(true)
+    }
+    
+    const checkIfContainsEmptyStrings = (obj) => {
+        // check if any properties in the object is an empty string
+        const isEmpty = Object.values(obj).some(x => x === '');
+        return isEmpty;
     }
 
     const buildRequestObject = () => {
@@ -125,6 +158,7 @@ const NewTournamentForm = () => {
                     <InputFloatingLabel inputName="teamSixteen" inputValue={inputValue.teamSixteen} handleChange={handleChange} labelName="Team #16" inputType="text" />
                 </div>
                 <input type="submit" value="Next" />
+                {errorMsg && <p className={styles.ErrorMsg}>All the fields must be filled!</p>}
             </form>
 
             {openModal && (

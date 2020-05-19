@@ -29,7 +29,7 @@ const InputFloatingLabel = ({ inputName, labelName, inputValue, handleChange, in
                 onFocus={handleFocused}
                 onBlur={handleBlured}
                 onChange={handleChange}
-                required
+                // required
                 type={inputType}
             />
         </div>
