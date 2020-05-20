@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-// import { faCog } from '@fortawesome/free-solid-svg-icons'
 
 import { PoolContext, TeamsContext, AuthContext } from '../../utils/TournamentContext';
 import { SocketContext } from '../../utils/SocketContext';
@@ -15,7 +13,6 @@ import Spinner from '../../components/Spinner/Spinner';
 import CurrentTimeContainer from '../../components/CurrentTimeContainer/CurrentTimeContainer';
 import PoolsWrapper from '../../components/PoolsWrapper/PoolsWrapper';
 import DisplayResultModal from '../../components/DisplayResultModal/DisplayResultModal';
-// import SettingsPopup from '../../components/SettingsPopup/SettingsPopup';
 
 
 const useQuery = () => {
@@ -23,8 +20,8 @@ const useQuery = () => {
 }
 
 // let socket;
-const ENDPOINT = 'http://localhost:3001/';
-const socket = io(ENDPOINT);
+// const ENDPOINT = 'http://localhost:3001/';
+const socket = io(process.env.REACT_APP_SOCKET_ENDPOINT);
 
 
 const Tournament = () => {
@@ -37,8 +34,7 @@ const Tournament = () => {
     const [showResultModal, setShowResultModal] = useState(false);
     const [matchResultData, setMatchResultData] = useState(null);
     const [currentRound, setCurrentRound] = useState(null);
-    // const [isModalOpen, setIsModalOpen] = useState(false);
-    // const [isCurrentRoundFinished, setIsCurrentRoundFinished] = useState(false);
+
     const isCurrentRoundFinished = useAllowedToGenerateNextRound(isAuthenticated, pools, currentRound); // custom hook
 
     const [isPlayoff, setIsPlayoff] = useState(false);
@@ -59,7 +55,6 @@ const Tournament = () => {
     useEffect(() => {
 
         socket.on('tournament', (data) => {
-            // console.log(data);
             setTeams(data.teams);
             setPools(data.pools);
             setCurrentRound(data.currentRound);
@@ -73,7 +68,7 @@ const Tournament = () => {
 
     useEffect(() => {
         socket.on('match-updated', (data) => {
-            console.log('TournamentPage.js - match-updated: ', data);
+            // console.log('TournamentPage.js - match-updated: ', data);
 
             setTeams(data.tournament.teams);
             setPools(data.tournament.pools);
@@ -81,23 +76,19 @@ const Tournament = () => {
         });
 
         socket.on('next-round-generated', data => {
-            console.log(data);
+            // console.log(data);
             setPools(data.pools);
             setCurrentRound(data.currentRound);
         });
 
 
         socket.on('playoffs-init', data => {
-            // console.log('SLUTSPELET PÅBÖRJAT!');
             setPools(data.pools);
             setCurrentRound(data.currentRound);
-            setIsPlayoff(true);
-            // setShowPlayoffs(true);
         });
 
         socket.on('playoffs-updated', data => {
             setPools(data.pools);
-            setCurrentRound(data.currentRound);
             setCurrentRound(data.currentRound);
         })
 
@@ -118,7 +109,7 @@ const Tournament = () => {
             setShowResultModal(true);
             setTimeout(() => {
                 setShowResultModal(false);
-            }, 4000)
+            }, 60000) // 4000 = 4 seconds
         }
     }, [matchResultData]);
 
@@ -169,21 +160,7 @@ const Tournament = () => {
                                 tournamentId={id}
                                 isPlayoff={isPlayoff}
                             />
-                            {/* {isAuthenticated && (
-                                <>
-                                    <div className={styles.SettingsContainer}>
-                                        <FontAwesomeIcon icon={faCog} onClick={() => setIsModalOpen(true)} className={styles.Icon} />
-                                        {isModalOpen && (
-                                            <SettingsPopup isOpen={isModalOpen} setIsOpen={setIsModalOpen}>
-                                                {isCurrentRoundFinished ? (
-                                                    <button className={styles.PopUp} onClick={generateNextRound}>Generate next round</button>
-                                                ) : <p>Du får inte uppdatera</p>}
-                                            </SettingsPopup>
-                                        )}
-                                    </div>
-
-                                </>
-                            )} */}
+ 
                             {isAuthenticated && (
                                 <div className={styles.SettingsContainer}>
                                     {isCurrentRoundFinished && (

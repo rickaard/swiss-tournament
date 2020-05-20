@@ -100,7 +100,7 @@ const NewTournamentForm = () => {
 
     const postTournamentData = (data) => {
 
-        fetch('http://localhost:3001/create-tournament', {
+        fetch(REACT_APP_CREATE_TOURNAMENT_ENDPOINT, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

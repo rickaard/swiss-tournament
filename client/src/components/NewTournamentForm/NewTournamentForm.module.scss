@@ -4,10 +4,19 @@
     display: flex;
     flex-direction: column;
 
+    @media screen and (max-width: 800px) {
+        padding: 3rem 1rem;
+    }
+
     .InputGroup {
         display: flex;
         flex-direction: row;
         width: 100%;
+
+        @media screen and (max-width: 650px) {
+            flex-direction: column;
+            width: 95%;
+        }
     }
 
     input[type="submit"] {

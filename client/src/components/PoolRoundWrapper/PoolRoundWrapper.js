@@ -32,9 +32,9 @@ const PoolRoundWrapper = ({ poolRound, tournamentId, showScore }) => {
         });
 
         // Find out which team won the match
-        const winningTeam = matchObject.homeScore > matchObject.awayScore ? matchObject.home : matchObject.away;
+        const winningTeam = Number(matchObject.homeScore) > Number(matchObject.awayScore) ? matchObject.home : matchObject.away;
         // Find out which team lost the match
-        const loosingTeam = matchObject.homeScore < matchObject.awayScore ? matchObject.home : matchObject.away;
+        const loosingTeam = Number(matchObject.homeScore) < Number(matchObject.awayScore) ? matchObject.home : matchObject.away;
 
         // Construct new teams array
         // Increment winning teams wins
@@ -70,10 +70,9 @@ const PoolRoundWrapper = ({ poolRound, tournamentId, showScore }) => {
     const postUpdatedResult = (tournamentObj) => {
         socket.emit('update-match', { tournamentObj }, (error) => {
 
-            if (error) return console.log('Something went wrong'); // CHANGE THIS!!!!!!!!!!!!!!!!!
+            if (error) return console.log('Something went wrong'); // CHANGE THIS!
             setPools(tournamentObj.pools);
             setTeams(tournamentObj.teams);
-            console.log('PoolRoundWrapper.js - postUpdatedResult: inte error');
         });
     };
 

@@ -2,6 +2,10 @@
     width: 100%;
     min-width: 400px;
     color: #555;
+
+    @media screen and (max-width: 500px) {
+        min-width: 280px;
+    }
 }
 
 .Header {
@@ -30,6 +34,10 @@
             list-style: none;
             width: 24%;
             padding: 0.3rem;
+
+            @media screen and (max-width: 600px) {
+                width: 49%;
+            }
         }
     }
 }
@@ -49,6 +57,7 @@
     flex-direction: row;
     width: 100%;
     color: #555;
+    margin-top: 1rem;
 
     label {
         font-weight: bold;

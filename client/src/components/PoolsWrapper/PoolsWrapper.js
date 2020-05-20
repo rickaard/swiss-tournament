@@ -50,11 +50,6 @@ const PoolsWrapper = ({ tournamentId, isPlayoff }) => {
                     </div>
                 ) :
                 (
-                    // <div className={styles.Playoffs}>
-                    //     <PlayoffsPage poolRound={quarterPool} tournamentId={tournamentId} showScore={showScore} />
-                    //     <PlayoffsPage poolRound={semiPool} tournamentId={tournamentId} showScore={showScore} />
-                    //     <PlayoffsPage poolRound={finalPool} tournamentId={tournamentId} showScore={showScore} />
-                    // </div>
                     <div className={styles.PoolsWrapper} style={{justifyContent: 'space-evenly'}}>
                         <PoolRoundWrapper poolRound={quarterPool} tournamentId={tournamentId} showScore={showScore} />
                         <PoolRoundWrapper poolRound={semiPool} tournamentId={tournamentId} showScore={showScore} />

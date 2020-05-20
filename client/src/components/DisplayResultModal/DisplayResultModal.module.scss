@@ -24,6 +24,11 @@
     justify-content: space-between;
     animation-name: box-shadow;
     animation-duration: 1s;
+
+    @media screen and (max-width: 1000px) {
+        width: max-content;
+        padding: .1rem 1rem;
+    }
 }
 @keyframes box-shadow {
     from {box-shadow: 0px 0px 0px 0px #DD892F};
@@ -39,6 +44,10 @@
 
     p {
         font-size: 1.6rem;
+
+        @media screen and (max-width: 500px) {
+            font-size: 1rem;
+        }
     }
 
     .ScoreWrapper {
@@ -50,10 +59,21 @@
         .ScoreItem {
             font-size: 5rem;
             margin: 0 .5rem;
+
+            @media screen and (max-width: 1000px) {
+                font-size: 4rem;
+            }
+            @media screen and (max-width: 500px) {
+                font-size: 3.5rem;
+            }
         }
 
         .Divider {
             font-size: 1.6rem;
+
+            @media screen and (max-width: 500px) {
+                font-size: 1rem;
+            }
         }
     }
 

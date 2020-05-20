@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { AuthContext } from '../../utils/TournamentContext';
 
 import UpdateMatchModal from '../UptadeMatchModal/UpdateMatchModal';
@@ -10,12 +10,18 @@ const MatchUpContainer = ({ game, poolId, updateMatchInSpecifcPool, showScore })
     const [isModalOpen, setIsModalOpen] = useState(false);
 
 
-    const [matchId] = useState(game._id);
+    const [matchId, setMatchId] = useState(game._id);
     const [homeTeam, setHomeTeam] = useState({ home: game.home, homeScore: game.homeScore }); // set state from props
     const [awayTeam, setAwayTeam] = useState({ away: game.away, awayScore: game.awayScore }); // set state from props
     const [errorMsg, setErrorMsg] = useState('');
 
     const handleAdminClick = !isAuthenticated ? null : () => setIsModalOpen(true);
+
+    useEffect(() => {
+        setHomeTeam({ home: game.home, homeScore: game.homeScore });
+        setAwayTeam({ away: game.away, awayScore: game.awayScore });
+        setMatchId(game._id);
+    }, [game]);
 
     const updateMatch = () => {
 
@@ -73,6 +79,8 @@ const MatchUpContainer = ({ game, poolId, updateMatchInSpecifcPool, showScore })
         return teamScore;
 
     }
+
+    // console.log('MatchUpContainer.js')
 
     return (
         <>

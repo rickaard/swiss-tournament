@@ -21,12 +21,21 @@ const PoolItem = ({ poolType, poolGames, poolId, updateMatchInSpecifcPool, showS
             return { minHeight: '110px' }
         }
         return {}
+    };
+
+    const poolTypeStyles = () => {
+        if (poolType === 'Quarter Final' ||
+            poolType === 'Semi Final' ||
+            poolType === 'Grand Final') {
+            return { fontSize: '1rem' }
+        }
+        return {}
     }
 
     // console.log('PoolItem.js - ', poolType, poolGames);
     return (
         <div className={styles.PoolItem} style={poolItemStyles()}>
-            <h3 className={styles.PoolType}>{poolType}</h3>
+            <h3 className={styles.PoolType} style={poolTypeStyles()}>{poolType}</h3>
             <div className={styles.GamesWrapper}>
                 {poolGames.map((game, index) => (
                     <MatchUpContainer

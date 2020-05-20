@@ -7,4 +7,10 @@
     margin: 2rem 0;
     width: 100%;
     padding: 0 1rem;
+
+    @media screen and (max-width: 1000px) {
+        flex-direction: column;
+        max-width: 600px;
+        margin: 1rem 0;
+    }
 }

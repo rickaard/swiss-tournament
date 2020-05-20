@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import styles from './UpdateMatchContainer.module.scss';
 
 const UpdateMatchContainer = ({ home, changeHomeScore, away, changeAwayScore, allowUpdate, errorMsg, setErrorMsg }) => {
-    // console.log('UpdateMatchContainer.js, inne i Modal, current game: ', currentGame);
+    
     return (
         <div className={styles.UpdateContainer}>
             <form>
