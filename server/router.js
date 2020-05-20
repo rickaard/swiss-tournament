@@ -4,6 +4,7 @@ const shortId = require('shortid');
 
 const Tournament = require('./models/Tournament');
 const poolDivider = require('./utils/utils');
+const sendMailWithLinks = require('./mail');
 
 router.get('/', (req, res) => {
     res.send({ message: 'yey' });
@@ -15,7 +16,6 @@ router.post('/create-tournament', async (req, res) => {
     // FIXA MEJL-UTSKICK
 
     const { tournamentName, teams, email } = req.body;
-
 
     // shuffle teams array and divide into first pool
     const gamesArray = poolDivider(teams);
@@ -52,6 +52,8 @@ router.post('/create-tournament', async (req, res) => {
     // Save to DB
     try {
         const savedTournament = await tournament.save();
+        sendMailWithLinks(email, savedTournament._id, savedTournament.authId);
+        
         console.log('NY TURNERING SPARAD TILL DATABAS!');
         res.send({ savedTournament });
     } catch (error) {
