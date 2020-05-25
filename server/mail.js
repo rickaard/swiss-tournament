@@ -17,14 +17,13 @@ const sendMailWithLinks = (emailAdress, tournamentId, authId) => {
         from: process.env.MAIL_USER,
         to: emailAdress,
         subject: `Your tournament-links from swisstournaments.com`,
-        text: `
-            Hello! \n
-            Here are your links to your generated swiss tournament:
-            Admin page: https://app.swisstournament.com/tournament/${tournamentId}?auth=${authId} 
-            Display page: https://app.swisstournament.com/tournament/${tournamentId} \n
+        text: `Hello! \n
+Here's the links to your generated swiss tournament:
+Admin page: https://app.swisstournament.com/tournament/${tournamentId}?auth=${authId} 
+Display page: https://app.swisstournament.com/tournament/${tournamentId} \n
 
-            Good luck and have fun in your tournament!
-            `
+Good luck and have fun in your tournament!
+`
     };
 
     transporter.sendMail(mailOptions, (err, info) => {

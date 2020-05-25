@@ -19,8 +19,6 @@ const useQuery = () => {
     return new URLSearchParams(useLocation().search);
 }
 
-// let socket;
-// const ENDPOINT = 'http://localhost:3001/';
 const socket = io(process.env.REACT_APP_SOCKET_ENDPOINT);
 
 
@@ -41,9 +39,7 @@ const Tournament = () => {
 
     const authId = query.get("auth");
 
-
     useEffect(() => {
-
         socket.emit('join', { tournamentId: id }, (error) => {
             if (error) {
                 setIsLoaded(true);
@@ -109,7 +105,7 @@ const Tournament = () => {
             setShowResultModal(true);
             setTimeout(() => {
                 setShowResultModal(false);
-            }, 60000) // 4000 = 4 seconds
+            }, 4000) // 4000 = 4 seconds
         }
     }, [matchResultData]);
 

@@ -11,9 +11,7 @@ router.get('/', (req, res) => {
 });
 
 router.post('/create-tournament', async (req, res) => {
-
-    // FIXA VALIDERING!!! @HAPI/JOI???
-    // FIXA MEJL-UTSKICK
+    console.log('router.js - Tar emot post-anrop')
 
     const { tournamentName, teams, email } = req.body;
 
@@ -51,9 +49,13 @@ router.post('/create-tournament', async (req, res) => {
     });
     // Save to DB
     try {
+        console.log('Försöker spara till DB')
         const savedTournament = await tournament.save();
-        sendMailWithLinks(email, savedTournament._id, savedTournament.authId);
-        
+
+        if (email) {
+            sendMailWithLinks(email, savedTournament._id, savedTournament.authId);
+        }
+
         console.log('NY TURNERING SPARAD TILL DATABAS!');
         res.send({ savedTournament });
     } catch (error) {

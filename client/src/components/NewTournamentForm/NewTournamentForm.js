@@ -78,6 +78,7 @@ const NewTournamentForm = () => {
     }
 
     const buildRequestObject = () => {
+        console.log('NewTournamentForm.js - bygger objekt')
         setIsLoading(true);
 
         const { tournamentName, ...rest } = inputValue;
@@ -99,8 +100,9 @@ const NewTournamentForm = () => {
     }
 
     const postTournamentData = (data) => {
+        console.log('NewTournamentForm.js - POSTAR')
 
-        fetch(REACT_APP_CREATE_TOURNAMENT_ENDPOINT, {
+        fetch(process.env.REACT_APP_CREATE_TOURNAMENT_ENDPOINT, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
