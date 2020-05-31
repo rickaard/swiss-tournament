@@ -144,12 +144,7 @@ const Tournament = () => {
                                 matchResultData={matchResultData}
                             />
                         )}
-                        <CurrentTimeContainer
-                            onClick={() => {
-                                console.log('TournamentPage.js, teams-state: ', teams);
-                                console.log('TournamentPage.js, pools-state: ', pools);
-                                console.log('TournamentPage.js, currentRound: ', currentRound);
-                            }} />
+                        <CurrentTimeContainer />
 
                         <SocketContext.Provider value={{ socket }}>
                             <PoolsWrapper
