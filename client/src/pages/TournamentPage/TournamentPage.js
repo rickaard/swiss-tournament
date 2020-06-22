@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { PoolContext, TeamsContext, AuthContext } from '../../utils/TournamentContext';
 import { SocketContext } from '../../utils/SocketContext';
@@ -32,6 +33,7 @@ const Tournament = () => {
     const [showResultModal, setShowResultModal] = useState(false);
     const [matchResultData, setMatchResultData] = useState(null);
     const [currentRound, setCurrentRound] = useState(null);
+    const [tournamentName, setTournamentName] = useState('');
 
     const isCurrentRoundFinished = useAllowedToGenerateNextRound(isAuthenticated, pools, currentRound); // custom hook
 
@@ -54,6 +56,7 @@ const Tournament = () => {
             setTeams(data.teams);
             setPools(data.pools);
             setCurrentRound(data.currentRound);
+            setTournamentName(data.tournamentName);
             if (authId === data.authId) {
                 setIsAuthenticated(true);
             }
@@ -137,6 +140,13 @@ const Tournament = () => {
                 <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
 
                     <div className={styles.Container}>
+                        <Helmet>
+                            <title>Swiss tournaments - {tournamentName}</title>
+                            <meta
+                                name="description"
+                                content={`Tournament page for: ${tournamentName}`}
+                            />
+                        </Helmet>
                         {showResultModal && (
                             <DisplayResultModal
                                 isOpen={showResultModal}
@@ -151,7 +161,7 @@ const Tournament = () => {
                                 tournamentId={id}
                                 isPlayoff={isPlayoff}
                             />
- 
+
                             {isAuthenticated && (
                                 <div className={styles.SettingsContainer}>
                                     {isCurrentRoundFinished && (

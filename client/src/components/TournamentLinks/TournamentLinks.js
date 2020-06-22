@@ -10,11 +10,11 @@ const TournamentLinks = ({ tournamentId, authId }) => {
             <h3>This is the link's to your newly created tournament</h3>
             <div className={styles.LinkItem}>
                 <span>Admin page: </span>
-                <a href={`/tournament/${tournamentId}?auth=${authId}`}>{`http://app.swisstournaments.se/${tournamentId}?auth=${authId}`}</a>
+                <a href={`/tournament/${tournamentId}?auth=${authId}`}>{`https://app.swisstournaments.se/tournament/${tournamentId}?auth=${authId}`}</a>
             </div>
             <div className={styles.LinkItem}>
                 <span>Display page:</span>
-                <a href={`/tournament/${tournamentId}`}>{`http://app.swisstournaments.se/${tournamentId}`}</a>
+                <a href={`/tournament/${tournamentId}`}>{`https://app.swisstournaments.se/tournament/${tournamentId}`}</a>
             </div>
             <div className={styles.Info}>
                 <p>These links have been sent to your email aswell. Have fun!</p>

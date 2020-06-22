@@ -1,0 +1,28 @@
+.Wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #010648;
+
+    div {
+        color: rgb(221, 137, 47);
+        text-align: center;
+        font-size: 1.5rem;
+
+        p {
+            margin-top: 1rem;
+        }
+
+        span {
+            display: inline-block;
+
+            a {
+                color: inherit;
+                text-transform: uppercase;
+            }
+        }
+    }
+}
