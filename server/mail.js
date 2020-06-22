@@ -19,8 +19,8 @@ const sendMailWithLinks = (emailAdress, tournamentId, authId) => {
         subject: `Your tournament-links from swisstournaments.com`,
         text: `Hello! \n
 Here's the links to your generated swiss tournament:
-Admin page: http://app.swisstournaments.com/tournament/${tournamentId}?auth=${authId} 
-Display page: http://app.swisstournaments.com/tournament/${tournamentId} \n
+Admin page: https://app.swisstournaments.com/tournament/${tournamentId}?auth=${authId} 
+Display page: https://app.swisstournaments.com/tournament/${tournamentId} \n
 
 Good luck and have fun in your tournament!
 `
