@@ -9,7 +9,7 @@ const NewTournament = () => {
     return (
         <div className={styles.Container}>
             <Helmet>
-                <title>Swiss tournaments - make your own tournament</title>
+                <title>Swiss tournaments - create your own tournament</title>
                 <meta 
                     name="description"
                     content="Create and handle your own tournaments with the Swiss tournament format"

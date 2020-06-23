@@ -142,10 +142,6 @@ const Tournament = () => {
                     <div className={styles.Container}>
                         <Helmet>
                             <title>Swiss tournaments - {tournamentName}</title>
-                            <meta
-                                name="description"
-                                content={`Tournament page for: ${tournamentName}`}
-                            />
                         </Helmet>
                         {showResultModal && (
                             <DisplayResultModal
